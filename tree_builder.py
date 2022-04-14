@@ -12,6 +12,10 @@ class DataIsNotTree(TreeBuilderException):
     ...
 
 
+class TreeIsSeparated(TreeBuilderException):
+    ...
+
+
 def build_tree(data: Sequence[Tuple[Optional[str], str]]) -> Node:
     nodes: Set[str] = set()
 
@@ -20,7 +24,10 @@ def build_tree(data: Sequence[Tuple[Optional[str], str]]) -> Node:
             raise DataIsNotTree(
                 f"{to_node} is child already, data is not tree"
             )
-        if from_node is not None:
-            nodes.add(from_node)
+        nodes.add(to_node)
+        if from_node is not None and from_node not in nodes:
+            raise TreeIsSeparated(
+                f"{from_node} is not child, but is set as parent"
+            )
 
     return {}

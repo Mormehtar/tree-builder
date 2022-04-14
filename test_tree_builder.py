@@ -33,4 +33,21 @@ def test_tree_is_not_separated():
         ("1", "2"),
         (None, "1"),
     )
-    assert build_tree(source)
+    expected = {"1": {"2": {}}}
+    assert build_tree(source) == expected
+
+
+def test_tree_big_tree():
+    source = (
+        ("1", "2"),
+        (None, "1"),
+        ("3", "4"),
+        ("3", "5"),
+        (None, "6"),
+        ("6", "3"),
+    )
+    expected = {
+        "1": {"2": {}},
+        "6": {"3": {"4": {}, "5": {}}},
+    }
+    assert build_tree(source) == expected

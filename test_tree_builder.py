@@ -26,3 +26,11 @@ def test_separated_tree():
 
     with pytest.raises(TreeIsSeparated):
         build_tree(source)
+
+
+def test_tree_is_not_separated():
+    source = (
+        ("1", "2"),
+        (None, "1"),
+    )
+    assert build_tree(source)
